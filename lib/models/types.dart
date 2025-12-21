@@ -1,51 +1,51 @@
 enum Priority { low, medium, high }
-// enum TaskType { todo, routine }
+
 enum Category { work, personal, study }
 
-// Task 데이터 모델
 class Task {
   final String id;
   final String title;
-  final String? description;
-  final DateTime date; // React의 string/Date를 DateTime으로
-  final bool isCompleted;
-  final Priority priority;
-  final String color; // 추가됨: Hex Color String
-  final String type;  // 추가됨: 'todo' or 'routine' (문자열로 저장하거나 enum 사용)
   final bool completed;
+  final DateTime date;
+  final String? description;
   final Category category;
+  final Priority priority;
 
   Task({
     required this.id,
     required this.title,
-    required this.description,
+    this.completed = false,
     required this.date,
-    this.isCompleted = false,
-    this.priority = Priority.medium,
-    this.color = '#10B981', // 기본값 초록
-    this.type = 'todo',
+    this.description,
+    required this.category,
+    required this.priority,
   });
 
-  // 데이터를 복사하며 수정할 때 유용한 메서드 (React의 Spread 연산자 대체)
+  // 데이터 변경을 위한 copyWith (React의 ...spread와 유사)
   Task copyWith({
     String? id,
     String? title,
-    String? description,
+    bool? completed,
     DateTime? date,
-    bool? isCompleted,
+    String? description,
+    Category? category,
     Priority? priority,
-    String? color,
-    String? type,
   }) {
     return Task(
       id: id ?? this.id,
       title: title ?? this.title,
-      description: description ?? this.description,
+      completed: completed ?? this.completed,
       date: date ?? this.date,
-      isCompleted: isCompleted ?? this.isCompleted,
+      description: description ?? this.description,
+      category: category ?? this.category,
       priority: priority ?? this.priority,
-      color: color ?? this.color,
-      type: type ?? this.type,
     );
   }
+}
+
+class User {
+  final String name;
+  final String? avatar;
+
+  User({required this.name, this.avatar});
 }

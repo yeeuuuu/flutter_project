@@ -31,3 +31,13 @@ class Utils {
     return DateTime.now().microsecondsSinceEpoch.toString();
   }
 }
+
+class AppUtils {
+  static String formatDate(DateTime date) {
+    return DateFormat('yyyy-MM-dd').format(date);
+  }
+
+  static String formatMonth(DateTime date) {
+    return DateFormat('MMMM yyyy').format(date);
+  }
+}
