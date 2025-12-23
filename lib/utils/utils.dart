@@ -1,43 +1,40 @@
 import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 
-// React의 cn (Tailwind merge)은 Flutter에서 필요 없으므로 생략
-// 날짜 포맷팅 로직 변환
 class Utils {
+  // 날짜 포맷 (yyyy-MM-dd)
   static String formatDate(DateTime date) {
     return DateFormat('yyyy-MM-dd').format(date);
   }
 
-  static bool isToday(DateTime date) {
-    final now = DateTime.now();
-    return date.year == now.year &&
-        date.month == now.month &&
-        date.day == now.day;
+  // 오늘 날짜인지 확인
+  static bool isToday(String dateString) {
+    final today = formatDate(DateTime.now());
+    return dateString == today;
   }
 
-  static bool isTomorrow(DateTime date) {
-    final tomorrow = DateTime.now().add(const Duration(days: 1));
-    return date.year == tomorrow.year &&
-        date.month == tomorrow.month &&
-        date.day == tomorrow.day;
+  // 내일 날짜인지 확인
+  static bool isTomorrow(String dateString) {
+    final tomorrow = formatDate(DateTime.now().add(const Duration(days: 1)));
+    return dateString == tomorrow;
   }
 
-  static String getDateLabel(DateTime date) {
-    if (isToday(date)) return '오늘';
-    if (isTomorrow(date)) return '내일';
-    return DateFormat('M월 d일').format(date);
+  // 날짜 레이블 (오늘, 내일, M월 d일)
+  static String getDateLabel(String dateString) {
+    if (isToday(dateString)) return '오늘';
+    if (isTomorrow(dateString)) return '내일';
+
+    try {
+      final date = DateTime.parse(dateString);
+      return '${date.month}월 ${date.day}일';
+    } catch (e) {
+      return dateString;
+    }
   }
 
+  // 고유 ID 생성 (uuid 패키지 사용 권장)
   static String generateId() {
-    return DateTime.now().microsecondsSinceEpoch.toString();
-  }
-}
-
-class AppUtils {
-  static String formatDate(DateTime date) {
-    return DateFormat('yyyy-MM-dd').format(date);
-  }
-
-  static String formatMonth(DateTime date) {
-    return DateFormat('MMMM yyyy').format(date);
+    return const Uuid().v4(); 
+    // 패키지 설치가 안 된 경우 임시: return DateTime.now().millisecondsSinceEpoch.toString();
   }
 }
