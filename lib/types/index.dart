@@ -64,6 +64,6 @@ class RoutineStreak {
   RoutineStreak({
     required this.routineId,
     required this.currentStreak,
-    required this.longestStreak,
+    required this.longestStreak, required String lastCompletedDate,
   });
 }
