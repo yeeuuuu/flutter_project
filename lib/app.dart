@@ -46,76 +46,65 @@ class _MainLayoutState extends State<MainLayout> {
   void _loadInitialData() {
     final now = DateTime.now();
     final today = DateFormat('yyyy-MM-dd').format(now);
-    final yesterday = DateFormat('yyyy-MM-dd').format(now.subtract(const Duration(days: 1)));
-    final tomorrow = DateFormat('yyyy-MM-dd').format(now.add(const Duration(days: 1)));
 
+    // 알림 테스트를 위해 '오늘'이지만 아직 완료 안 된 태스크들을 생성합니다.
     setState(() {
       _tasks = [
-        // 1. [알림 탭용] 어제 못 끝낸 할 일 (이게 있어야 알림에 뜸)
+        // [알림 탭 표시용] 1. 아침 운동하기 (루틴, 미완료)
         Task(
-          id: 'missed_1',
-          title: '어제 못 한 영어 공부',
-          type: 'todo',
-          completed: false,
-          date: yesterday,
-          color: '#EF4444', // Red
-          createdAt: now.subtract(const Duration(days: 1)).toIso8601String(),
-        ),
-        // 2. [기록 탭용] 루틴 1 (아침 운동)
-        Task(
-          id: 'routine_1',
+          id: 'noti_1',
           title: '아침 운동하기',
           type: 'routine',
-          completed: true, // 오늘은 완료함
+          completed: false,
           date: today,
           color: '#10B981', // Green
           createdAt: now.toIso8601String(),
         ),
-        // 3. [홈 탭용] 오늘의 할 일
+        // [알림 탭 표시용] 2. 프로젝트 리뷰 (할 일, 미완료)
         Task(
-          id: 'todo_1',
-          title: '장보기',
+          id: 'noti_2',
+          title: '프로젝트 리뷰',
           type: 'todo',
           completed: false,
           date: today,
-          color: '#F59E0B', // Amber
+          color: '#3B82F6', // Blue
           createdAt: now.toIso8601String(),
         ),
-        // 4. [기록 탭용] 루틴 2 (독서)
+        // [알림 탭 표시용] 3. 독서 30분 (루틴, 미완료)
         Task(
-          id: 'routine_2',
-          title: '잠들기 전 독서',
+          id: 'noti_3',
+          title: '독서 30분',
           type: 'routine',
           completed: false,
           date: today,
           color: '#8B5CF6', // Violet
           createdAt: now.toIso8601String(),
         ),
-        // 5. 내일 할 일
+        // [기록 탭 통계용] 완료된 샘플
         Task(
-          id: 'todo_future',
-          title: '주간 회의 준비',
-          type: 'todo',
-          completed: false,
-          date: tomorrow,
-          color: '#3B82F6', // Blue
+          id: 'done_1',
+          title: '영양제 먹기',
+          type: 'routine',
+          completed: true,
+          date: today,
+          color: '#F59E0B',
           createdAt: now.toIso8601String(),
         ),
       ];
 
-      // [기록 탭용] 루틴 연속 기록 데이터 (ID를 위 Task와 일치시킴)
+      // [기록 탭 표시용] 루틴 연속 기록 데이터
       _streaks = [
         RoutineStreak(
-          routineId: 'routine_1', // 아침 운동하기와 매칭
+          routineId: 'noti_1', // 아침 운동하기
           currentStreak: 5,
-          longestStreak: 12,
+          longestStreak: 12, // 최장 기록 12일
           lastCompletedDate: today,
         ),
         RoutineStreak(
-          routineId: 'routine_2', // 독서와 매칭
-          currentStreak: 2,
-          longestStreak: 4,
-          lastCompletedDate: yesterday,
+          routineId: 'noti_3', // 독서 30분
+          currentStreak: 3,
+          longestStreak: 7,
+          lastCompletedDate: today,
         ),
       ];
     });
@@ -141,15 +130,20 @@ class _MainLayoutState extends State<MainLayout> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-      HomeTab(tasks: _tasks, onUpdateTask: _handleUpdateTask, onDeleteTask: _handleDeleteTask),
+      HomeTab(
+          tasks: _tasks,
+          onUpdateTask: _handleUpdateTask,
+          onDeleteTask: _handleDeleteTask),
       CalendarTab(tasks: _tasks),
-      NotificationTab(tasks: _tasks), // 이제 어제 미완료 태스크가 보일 것입니다.
-      RecordsTab(tasks: _tasks, streaks: _streaks), // 이제 루틴 기록이 보일 것입니다.
+      NotificationTab(tasks: _tasks),
+      RecordsTab(tasks: _tasks, streaks: _streaks),
     ];
 
-    // 알림 배지 카운트 (오늘 이전 미완료 태스크)
+    // 알림 배지 카운트 (오늘 포함 이전 미완료 태스크)
     final todayStr = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    final incompleteCount = _tasks.where((t) => !t.completed && t.date.compareTo(todayStr) <= 0).length;
+    final incompleteCount = _tasks
+        .where((t) => !t.completed && t.date.compareTo(todayStr) <= 0)
+        .length;
 
     return Scaffold(
       body: SafeArea(
@@ -174,25 +168,32 @@ class _MainLayoutState extends State<MainLayout> {
           selectedFontSize: 12,
           unselectedFontSize: 12,
           items: [
-            const BottomNavigationBarItem(icon: Icon(LucideIcons.home), label: '홈'),
-            const BottomNavigationBarItem(icon: Icon(LucideIcons.calendar), label: '캘린더'),
+            const BottomNavigationBarItem(
+                icon: Icon(LucideIcons.home), label: '홈'),
+            const BottomNavigationBarItem(
+                icon: Icon(LucideIcons.calendar), label: '캘린더'),
             BottomNavigationBarItem(
               icon: Stack(
                 children: [
                   const Icon(LucideIcons.bell),
                   if (incompleteCount > 0)
                     Positioned(
-                      right: 0, top: 0,
+                      right: 0,
+                      top: 0,
                       child: Container(
-                        width: 8, height: 8,
-                        decoration: const BoxDecoration(color: AppTheme.destructive, shape: BoxShape.circle),
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                            color: AppTheme.destructive,
+                            shape: BoxShape.circle),
                       ),
                     ),
                 ],
               ),
               label: '알림',
             ),
-            const BottomNavigationBarItem(icon: Icon(LucideIcons.barChart2), label: '기록'),
+            const BottomNavigationBarItem(
+                icon: Icon(LucideIcons.barChart2), label: '기록'),
           ],
         ),
       ),
