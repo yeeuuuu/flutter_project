@@ -23,7 +23,6 @@ class AppTheme {
       
       // 색상 스키마 정의
       colorScheme: const ColorScheme.light(
-        onBackground: foreground,
         surface: background,
         onSurface: foreground,
         primary: primary,

@@ -6,7 +6,6 @@ import 'package:flutter_project2/components/task_item.dart';
 import 'package:flutter_project2/components/task_dialog.dart';
 import 'package:flutter_project2/styles/theme.dart';
 
-import 'task_item.dart';
 
 class HomeTab extends StatefulWidget {
   final List<Task> tasks;

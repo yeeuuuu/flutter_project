@@ -60,7 +60,7 @@ class RecordsTab extends StatelessWidget {
           ),
           
           const SizedBox(height: 24),
-          const Text("루틴 현황", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text("현재 유지 중인 루틴", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
 
           // 2. 루틴 스트릭 리스트
