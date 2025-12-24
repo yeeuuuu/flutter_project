@@ -14,33 +14,23 @@ class CalendarTab extends StatefulWidget {
 }
 
 class _CalendarTabState extends State<CalendarTab> {
-  DateTime _selectedDate = DateTime.now(); // 사용자가 클릭한 날짜
-  DateTime _focusedDate = DateTime.now(); // 현재 보고 있는 달력의 월
+  DateTime _selectedDate = DateTime.now();
+  DateTime _focusedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // 1. 커스텀 캘린더 헤더 (월 이동)
         _buildHeader(),
-
-        // 2. 요일 헤더 (일 월 화 수 목 금 토)
         _buildDaysOfWeek(),
-
-        // 3. 캘린더 그리드 (날짜 + 점 표시)
         _buildCalendarGrid(),
-
         const Divider(height: 1, color: AppTheme.border),
-
-        // 4. 선택된 날짜의 할 일 목록
         Expanded(
           child: _buildTaskList(),
         ),
       ],
     );
   }
-
-  // --- 위젯 빌더 메서드들 ---
 
   Widget _buildHeader() {
     return Padding(
@@ -99,32 +89,27 @@ class _CalendarTabState extends State<CalendarTab> {
         DateTime(_focusedDate.year, _focusedDate.month + 1, 0).day;
     final firstDayOfMonth = DateTime(_focusedDate.year, _focusedDate.month, 1);
 
-    // 1일의 요일 (1: 월요일, ..., 7: 일요일).
-    // 일요일(7)을 0으로, 월요일(1)을 1로 만들기 위해 % 7 사용
     final weekdayOffset = firstDayOfMonth.weekday % 7;
 
     return GridView.builder(
-      shrinkWrap: true, // 내부 스크롤 방지
+      shrinkWrap: true, 
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 7, // 7일
-        childAspectRatio: 1.2, // 셀 비율 (높이 조절)
+        crossAxisCount: 7, 
+        childAspectRatio: 1.2,
       ),
       itemCount: daysInMonth + weekdayOffset,
       itemBuilder: (context, index) {
         if (index < weekdayOffset) {
-          return const SizedBox.shrink(); // 날짜 없는 빈 칸
+          return const SizedBox.shrink(); 
         }
 
         final day = index - weekdayOffset + 1;
         final currentDate =
             DateTime(_focusedDate.year, _focusedDate.month, day);
         final currentDateStr = DateFormat('yyyy-MM-dd').format(currentDate);
-
-        // 해당 날짜에 일정이 있는지 확인
         final hasTasks = widget.tasks.any((t) => t.date == currentDateStr);
-        // 완료되지 않은 일정이 있는지 (점 색상 구분용, 선택사항)
         final hasIncomplete =
             widget.tasks.any((t) => t.date == currentDateStr && !t.completed);
 
@@ -140,7 +125,6 @@ class _CalendarTabState extends State<CalendarTab> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // 날짜 원형 배경
               Container(
                 width: 30,
                 height: 30,
@@ -164,7 +148,6 @@ class _CalendarTabState extends State<CalendarTab> {
                 ),
               ),
               const SizedBox(height: 4),
-              // 점 표시 (Dot)
               if (hasTasks)
                 Container(
                   width: 5,
@@ -175,7 +158,7 @@ class _CalendarTabState extends State<CalendarTab> {
                   ),
                 )
               else
-                const SizedBox(height: 5), // 공간 유지용
+                const SizedBox(height: 5),
             ],
           ),
         );
@@ -261,8 +244,6 @@ class _CalendarTabState extends State<CalendarTab> {
       ],
     );
   }
-
-  // 날짜 비교 헬퍼 함수
   bool isSameDay(DateTime a, DateTime b) {
     return a.year == b.year && a.month == b.month && a.day == b.day;
   }

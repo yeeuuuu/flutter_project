@@ -1,9 +1,7 @@
-// lib/styles/theme.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // Shadcn UI 기본 색상 팔레트 (Zinc 테마 기준 예시)
   static const Color background = Colors.white;
   static const Color foreground = Color(0xFF09090b);
   
@@ -21,7 +19,6 @@ class AppTheme {
       useMaterial3: true,
       fontFamily: GoogleFonts.inter().fontFamily,
       
-      // 색상 스키마 정의
       colorScheme: const ColorScheme.light(
         surface: background,
         onSurface: foreground,
@@ -34,23 +31,21 @@ class AppTheme {
         outline: border,
       ),
 
-      // Scaffold 배경색
       scaffoldBackgroundColor: background,
 
-      // 텍스트 테마
       textTheme: GoogleFonts.interTextTheme().apply(
         bodyColor: foreground,
         displayColor: foreground,
       ),
 
-      // 버튼 스타일 (Tailwind 'default' variant 대응)
+      // 버튼 스타일
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primary,
           foregroundColor: primaryForeground,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6), // radius-md
+            borderRadius: BorderRadius.circular(6),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),

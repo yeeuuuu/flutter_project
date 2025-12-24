@@ -54,11 +54,10 @@ class _HomeTabState extends State<HomeTab> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // Today Section
           _buildSectionHeader(
               "오늘",
               Colors
-                  .transparent), // Dot removed for Today in design logic? Keep simple
+                  .transparent),
           if (todayTasks.isEmpty)
             _buildEmptyState("오늘 할 일이 없습니다")
           else
@@ -74,7 +73,6 @@ class _HomeTabState extends State<HomeTab> {
 
           const SizedBox(height: 24),
 
-          // Tomorrow Section
           _buildSectionHeader("내일", AppTheme.primary),
           if (tomorrowTasks.isEmpty)
             _buildEmptyState("내일 할 일이 없습니다")
@@ -89,7 +87,7 @@ class _HomeTabState extends State<HomeTab> {
                   onDelete: widget.onDeleteTask,
                 )),
 
-          const SizedBox(height: 80), // Fab space
+          const SizedBox(height: 80),
         ],
       ),
     );

@@ -1,5 +1,3 @@
-// lib/types/index.dart
-
 class User {
   final String id;
   final String name;
@@ -17,11 +15,11 @@ class User {
 class Task {
   final String id;
   final String title;
-  final String type; // 'todo' 또는 'routine'
-  final bool completed; // 완료 여부 (기존 isCompleted 대신 completed 사용)
-  final String date; // 'yyyy-MM-dd' 형식의 문자열
-  final String color; // Hex Color String (예: '#FF0000')
-  final String createdAt; // 생성일
+  final String type;
+  final bool completed;
+  final String date;
+  final String color;
+  final String createdAt;
 
   Task({
     required this.id,
@@ -33,7 +31,7 @@ class Task {
     required this.createdAt,
   });
 
-  // 복사본 생성을 위한 copyWith 메서드 (수정 모드 및 토글 시 사용)
+  // 복사본 생성을 위한 메서드 (수정 모드)
   Task copyWith({
     String? id,
     String? title,
@@ -55,7 +53,7 @@ class Task {
   }
 }
 
-// records_tab.dart에서 사용하는 루틴 스트릭 모델
+// records_tab.dart에서 사용
 class RoutineStreak {
   final String routineId;
   final int currentStreak;

@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter_project2/styles/theme.dart';
 import 'package:flutter_project2/types/index.dart';
 
-// 컴포넌트 Import
 import 'package:flutter_project2/components/home_tab.dart';
 import 'package:flutter_project2/components/calendar_tab.dart';
 import 'package:flutter_project2/components/notifications_tab.dart';
@@ -55,17 +54,16 @@ class _MainLayoutState extends State<MainLayout> {
 
     setState(() {
       _tasks = [
-        // [알림 탭 표시용] 1. 아침 운동하기 (오늘, 미완료)
+        //알림 탭 표시용
         Task(
           id: 'noti_1',
           title: '아침 운동하기',
           type: 'routine',
-          completed: false, // 미완료여야 알림에 뜸
+          completed: false,
           date: today,
           color: '#10B981', // Green
           createdAt: now.toIso8601String(),
         ),
-        // [알림 탭 표시용] 2. 프로젝트 리뷰 (오늘, 미완료)
         Task(
           id: 'noti_2',
           title: '프로젝트 리뷰',
@@ -75,7 +73,6 @@ class _MainLayoutState extends State<MainLayout> {
           color: '#3B82F6', // Blue
           createdAt: now.toIso8601String(),
         ),
-        // [알림 탭 표시용] 3. 독서 30분 (오늘, 미완료)
         Task(
           id: 'noti_3',
           title: '독서 30분',
@@ -85,7 +82,6 @@ class _MainLayoutState extends State<MainLayout> {
           color: '#8B5CF6', // Violet
           createdAt: now.toIso8601String(),
         ),
-        // [기록 탭 통계용] 완료된 샘플
         Task(
           id: 'done_1',
           title: '영양제 먹기',
@@ -115,16 +111,16 @@ class _MainLayoutState extends State<MainLayout> {
         ),
       ];
 
-      // [기록 탭 표시용] 루틴 연속 기록 데이터 (ID 매칭 중요)
+      //기록 탭 표시용
       _streaks = [
         RoutineStreak(
-          routineId: 'noti_1', // 아침 운동하기
+          routineId: 'noti_1',
           currentStreak: 5,
-          longestStreak: 12, // 최장 기록 12일 -> 이게 크게 뜸
+          longestStreak: 12,
           lastCompletedDate: today,
         ),
         RoutineStreak(
-          routineId: 'noti_3', // 독서 30분
+          routineId: 'noti_3',
           currentStreak: 3,
           longestStreak: 7,
           lastCompletedDate: today,

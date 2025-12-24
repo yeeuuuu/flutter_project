@@ -21,20 +21,18 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Hex Color String to Color Object
     Color taskColor = _parseColor(task.color);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppTheme.background, // bg-card
+        color: AppTheme.background, 
         border: Border.all(color: AppTheme.border),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
-          // Checkbox
           Transform.scale(
             scale: 1.1,
             child: Checkbox(
@@ -48,7 +46,6 @@ class TaskItem extends StatelessWidget {
           ),
           const SizedBox(width: 8),
 
-          // Content
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +80,6 @@ class TaskItem extends StatelessWidget {
             ),
           ),
 
-          // Color Indicator
           Container(
             width: 12,
             height: 12,
@@ -93,7 +89,6 @@ class TaskItem extends StatelessWidget {
             ),
           ),
 
-          // Action Buttons
           const SizedBox(width: 8),
           IconButton(
             icon: const Icon(LucideIcons.pencil, size: 16),

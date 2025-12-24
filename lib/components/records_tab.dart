@@ -44,7 +44,6 @@ class RecordsTab extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          // 상단 헤더
           const Row(
             children: [
               Icon(LucideIcons.trophy, size: 24),
@@ -55,7 +54,6 @@ class RecordsTab extends StatelessWidget {
           ),
           const SizedBox(height: 20),
 
-          // 1. 오늘의 진행률 카드
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
@@ -74,7 +72,7 @@ class RecordsTab extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.w600)),
                   ],
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -93,7 +91,7 @@ class RecordsTab extends StatelessWidget {
                     value: progress,
                     backgroundColor: AppTheme.muted,
                     valueColor: const AlwaysStoppedAnimation<Color>(
-                        Colors.black), // 디자인 시안 느낌
+                        Colors.black),
                     minHeight: 8,
                   ),
                 ),
@@ -101,12 +99,11 @@ class RecordsTab extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
 
-          // 2. [NEW] 최장 루틴 기록 카드 (가장 큰 카드)
           if (longestStreakRecord != null && longestStreakTask != null) ...[
             Container(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: AppTheme.border),
@@ -129,7 +126,7 @@ class RecordsTab extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.w600)),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 18),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -180,14 +177,12 @@ class RecordsTab extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
           ],
 
           const Text("현재 유지 중인 루틴",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
-
-          // 3. 루틴 리스트
           if (streaks.isEmpty)
             const Padding(
               padding: EdgeInsets.all(24.0),
@@ -256,8 +251,6 @@ class RecordsTab extends StatelessWidget {
             }),
 
           const SizedBox(height: 12),
-
-          // 4. 통계 요약 (하단 카드 2개)
           Row(
             children: [
               Expanded(

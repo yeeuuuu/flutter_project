@@ -48,7 +48,6 @@ class _TaskDialogState extends State<TaskDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title Input
             TextField(
               controller: _titleController,
               decoration: const InputDecoration(
@@ -58,7 +57,6 @@ class _TaskDialogState extends State<TaskDialog> {
             ),
             const SizedBox(height: 16),
 
-            // Type Selection (Radio)
             Row(
               children: [
                 Expanded(
@@ -82,7 +80,6 @@ class _TaskDialogState extends State<TaskDialog> {
               ],
             ),
 
-            // Date Picker
             const Text('날짜', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             InkWell(
@@ -113,7 +110,6 @@ class _TaskDialogState extends State<TaskDialog> {
             ),
             const SizedBox(height: 16),
 
-            // Color Picker
             const Text('색상', style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             Wrap(
