@@ -46,6 +46,12 @@ class _MainLayoutState extends State<MainLayout> {
   void _loadInitialData() {
     final now = DateTime.now();
     final today = DateFormat('yyyy-MM-dd').format(now);
+    final yesterday =
+        DateFormat('yyyy-MM-dd').format(now.subtract(const Duration(days: 1)));
+    final tomorrow =
+        DateFormat('yyyy-MM-dd').format(now.add(const Duration(days: 1)));
+    final fourdaysago =
+        DateFormat('yyyy-MM-dd').format(now.subtract(const Duration(days: 4)));
 
     setState(() {
       _tasks = [
@@ -65,7 +71,7 @@ class _MainLayoutState extends State<MainLayout> {
           title: '프로젝트 리뷰',
           type: 'todo',
           completed: false,
-          date: today,
+          date: yesterday,
           color: '#3B82F6', // Blue
           createdAt: now.toIso8601String(),
         ),
@@ -86,6 +92,24 @@ class _MainLayoutState extends State<MainLayout> {
           type: 'routine',
           completed: true,
           date: today,
+          color: '#F59E0B',
+          createdAt: now.toIso8601String(),
+        ),
+        Task(
+          id: 'noti_4',
+          title: '독서 동아리 회의',
+          type: 'todo',
+          completed: false,
+          date: tomorrow,
+          color: '#F59E0B',
+          createdAt: now.toIso8601String(),
+        ),
+        Task(
+          id: 'noti_5',
+          title: '도서관 책 반납',
+          type: 'todo',
+          completed: true,
+          date: fourdaysago,
           color: '#F59E0B',
           createdAt: now.toIso8601String(),
         ),
