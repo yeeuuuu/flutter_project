@@ -47,20 +47,19 @@ class _MainLayoutState extends State<MainLayout> {
     final now = DateTime.now();
     final today = DateFormat('yyyy-MM-dd').format(now);
 
-    // 알림 테스트를 위해 '오늘'이지만 아직 완료 안 된 태스크들을 생성합니다.
     setState(() {
       _tasks = [
-        // [알림 탭 표시용] 1. 아침 운동하기 (루틴, 미완료)
+        // [알림 탭 표시용] 1. 아침 운동하기 (오늘, 미완료)
         Task(
           id: 'noti_1',
           title: '아침 운동하기',
           type: 'routine',
-          completed: false,
+          completed: false, // 미완료여야 알림에 뜸
           date: today,
           color: '#10B981', // Green
           createdAt: now.toIso8601String(),
         ),
-        // [알림 탭 표시용] 2. 프로젝트 리뷰 (할 일, 미완료)
+        // [알림 탭 표시용] 2. 프로젝트 리뷰 (오늘, 미완료)
         Task(
           id: 'noti_2',
           title: '프로젝트 리뷰',
@@ -70,7 +69,7 @@ class _MainLayoutState extends State<MainLayout> {
           color: '#3B82F6', // Blue
           createdAt: now.toIso8601String(),
         ),
-        // [알림 탭 표시용] 3. 독서 30분 (루틴, 미완료)
+        // [알림 탭 표시용] 3. 독서 30분 (오늘, 미완료)
         Task(
           id: 'noti_3',
           title: '독서 30분',
@@ -92,12 +91,12 @@ class _MainLayoutState extends State<MainLayout> {
         ),
       ];
 
-      // [기록 탭 표시용] 루틴 연속 기록 데이터
+      // [기록 탭 표시용] 루틴 연속 기록 데이터 (ID 매칭 중요)
       _streaks = [
         RoutineStreak(
           routineId: 'noti_1', // 아침 운동하기
           currentStreak: 5,
-          longestStreak: 12, // 최장 기록 12일
+          longestStreak: 12, // 최장 기록 12일 -> 이게 크게 뜸
           lastCompletedDate: today,
         ),
         RoutineStreak(
@@ -139,7 +138,7 @@ class _MainLayoutState extends State<MainLayout> {
       RecordsTab(tasks: _tasks, streaks: _streaks),
     ];
 
-    // 알림 배지 카운트 (오늘 포함 이전 미완료 태스크)
+    // 알림 배지 카운트
     final todayStr = DateFormat('yyyy-MM-dd').format(DateTime.now());
     final incompleteCount = _tasks
         .where((t) => !t.completed && t.date.compareTo(todayStr) <= 0)

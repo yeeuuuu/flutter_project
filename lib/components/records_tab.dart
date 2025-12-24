@@ -19,22 +19,24 @@ class RecordsTab extends StatelessWidget {
         todayTasks.isNotEmpty ? completedToday / todayTasks.length : 0.0;
     final int percentage = (progress * 100).toInt();
 
-    // 루틴 정보 가져오기
     final routineTasks = tasks.where((t) => t.type == 'routine').toList();
     final uniqueRoutines = routineTasks.map((e) => e.title).toSet().toList();
 
-    // 최장 스트릭 찾기
+    // 최장 스트릭 찾기 로직
     RoutineStreak? longestStreakRecord;
     Task? longestStreakTask;
     if (streaks.isNotEmpty) {
-      // longestStreak 기준으로 정렬해서 제일 높은 것 가져오기
-      streaks.sort((a, b) => b.longestStreak.compareTo(a.longestStreak));
-      longestStreakRecord = streaks.first;
+      // 기록 중 가장 긴 것 찾기
+      final sortedStreaks = List<RoutineStreak>.from(streaks)
+        ..sort((a, b) => b.longestStreak.compareTo(a.longestStreak));
 
-      try {
-        longestStreakTask =
-            tasks.firstWhere((t) => t.id == longestStreakRecord!.routineId);
-      } catch (_) {}
+      if (sortedStreaks.isNotEmpty) {
+        longestStreakRecord = sortedStreaks.first;
+        try {
+          longestStreakTask =
+              tasks.firstWhere((t) => t.id == longestStreakRecord!.routineId);
+        } catch (_) {}
+      }
     }
 
     return Scaffold(
@@ -91,7 +93,7 @@ class RecordsTab extends StatelessWidget {
                     value: progress,
                     backgroundColor: AppTheme.muted,
                     valueColor: const AlwaysStoppedAnimation<Color>(
-                        Colors.grey), // 디자인 시안의 회색 톤
+                        Colors.black), // 디자인 시안 느낌
                     minHeight: 8,
                   ),
                 ),
@@ -101,7 +103,7 @@ class RecordsTab extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // 2. [New] 최장 루틴 기록 카드 (Main Feature)
+          // 2. [NEW] 최장 루틴 기록 카드 (가장 큰 카드)
           if (longestStreakRecord != null && longestStreakTask != null) ...[
             Container(
               padding: const EdgeInsets.all(24),
@@ -121,7 +123,7 @@ class RecordsTab extends StatelessWidget {
                 children: [
                   const Row(
                     children: [
-                      Icon(LucideIcons.trendingUp, size: 18), // 그래프 아이콘
+                      Icon(LucideIcons.trendingUp, size: 18),
                       SizedBox(width: 8),
                       Text("최장 루틴 기록",
                           style: TextStyle(fontWeight: FontWeight.w600)),
